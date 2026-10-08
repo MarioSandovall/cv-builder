@@ -1,0 +1,48 @@
+# ---- .NET ----
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+.vs/
+
+# ---- IDEs / editors ----
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ---- Frontend (Node / Vite / React) ----
+node_modules/
+dist/
+build/
+coverage/
+.vite/
+*.tsbuildinfo
+
+# ---- Environment / secrets ----
+.env
+.env.local
+.env.*.local
+*.pfx
+*.key
+*.pem
+secrets.json
+
+# ---- Test output ----
+TestResults/
+*.trx
+
+# ---- Logs ----
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ---- OS cruft ----
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Claude Code (local, per-developer) ----
+.claude/settings.local.json
