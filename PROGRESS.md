@@ -2,8 +2,8 @@
 
 **Last updated:** 2026-10-09
 **Current phase:** P0 — Foundations
-**Current session:** S0.4 — EF Core wiring and empty initial migration
-**Last session completed:** S0.3 — PostgreSQL in Docker
+**Current session:** S0.5 — OpenAPI, Scalar, and health endpoint
+**Last session completed:** S0.4 — EF Core wiring and empty initial migration
 
 > Full plan: `docs/superpowers/plans/2026-10-08-cv-builder-mvp-implementation-plan.md`
 > Spec: `docs/superpowers/specs/2026-10-08-cv-builder-mvp-architecture-design.md`
@@ -14,7 +14,7 @@
 - [x] S0.1 — Repository and Git initialization
 - [x] S0.2 — .NET solution and project scaffolding
 - [x] S0.3 — PostgreSQL in Docker
-- [ ] S0.4 — EF Core wiring and empty initial migration
+- [x] S0.4 — EF Core wiring and empty initial migration
 - [ ] S0.5 — OpenAPI, Scalar, and health endpoint
 - [ ] S0.6 — Folder scaffolding and CLAUDE.md refresh
 
