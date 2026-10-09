@@ -40,3 +40,20 @@ cv-builder/
 ## Development
 
 Setup and run instructions will be added as the project progresses (polished in session S7.2). For now, see the plan file for session-level details.
+
+### Database (local)
+
+The project runs PostgreSQL 17 in Docker. Credentials for local development live in a `.env` file (git-ignored).
+
+```bash
+cp .env.example .env       # one-time: create your local env file
+docker compose up -d postgres
+docker compose ps          # expect cvbuilder-postgres with status "healthy"
+docker compose down        # stop (data persists in the named volume)
+```
+
+The named volume `cvbuilder-pgdata` persists data across container restarts and recreations. To wipe the database entirely, run `docker compose down -v`.
+
+Postgres listens on `127.0.0.1:${POSTGRES_PORT}` (default `5432`) — the port is bound to loopback only, so it is not reachable from other machines on the network.
+
+The credentials in `.env.example` are intended for local development only. Do not reuse them for production, staging, or any shared environment.
