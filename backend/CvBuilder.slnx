@@ -1,2 +1,8 @@
 <Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CvBuilder.Api/CvBuilder.Api.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CvBuilder.Api.Tests/CvBuilder.Api.Tests.csproj" />
+  </Folder>
 </Solution>

@@ -1,9 +1,9 @@
 # CV Builder — Progress Tracker
 
-**Last updated:** 2026-10-08
+**Last updated:** 2026-10-09
 **Current phase:** P0 — Foundations
-**Current session:** S0.2 — .NET solution and project scaffolding
-**Last session completed:** S0.1 — Repository and Git initialization
+**Current session:** S0.3 — PostgreSQL in Docker
+**Last session completed:** S0.2 — .NET solution and project scaffolding
 
 > Full plan: `docs/superpowers/plans/2026-10-08-cv-builder-mvp-implementation-plan.md`
 > Spec: `docs/superpowers/specs/2026-10-08-cv-builder-mvp-architecture-design.md`
@@ -12,7 +12,7 @@
 
 ### P0 — Foundations
 - [x] S0.1 — Repository and Git initialization
-- [ ] S0.2 — .NET solution and project scaffolding
+- [x] S0.2 — .NET solution and project scaffolding
 - [ ] S0.3 — PostgreSQL in Docker
 - [ ] S0.4 — EF Core wiring and empty initial migration
 - [ ] S0.5 — OpenAPI, Scalar, and health endpoint
