@@ -1,0 +1,98 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# Cancel older runs for the same ref when a new commit lands.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend (.NET 10)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 10 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      # Cache keyed on all csproj hashes, scoped to backend/.
+      # setup-dotnet also sets DOTNET_NOLOGO/TELEMETRY_OPTOUT via env below.
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('backend/**/*.csproj') }}
+          restore-keys: |
+            nuget-${{ runner.os }}-
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build (Release)
+        run: dotnet build --configuration Release --no-restore
+
+      # Zero real tests exist today — the test project is a scaffold.
+      # `dotnet test` exits 0 with "No test is available", so CI stays
+      # green while we build out Phase 1 slices. The warning below makes
+      # the gap visible in the PR UI.
+      - name: Warn when no tests are discovered
+        run: |
+          echo "::warning title=No backend tests::CvBuilder.Api.Tests contains no test cases yet. Add xUnit tests as slices land (P1 onward)."
+
+      - name: Test
+        run: dotnet test --configuration Release --no-build --verbosity normal
+
+    env:
+      DOTNET_NOLOGO: 'true'
+      DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 'true'
+
+  frontend:
+    name: Frontend (Node 22)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install (clean, lockfile-driven)
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      # `npm run build` is `tsc -b && vite build`, so type errors fail here.
+      - name: Build
+        run: npm run build
+
+  docker:
+    name: Docker build (backend)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Plain `docker build` on ubuntu-latest already uses BuildKit.
+      # No login, no push: we only verify the Dockerfile stays buildable.
+      - name: Build backend image
+        run: docker build --file backend/Dockerfile --tag cvbuilder-api:ci backend
