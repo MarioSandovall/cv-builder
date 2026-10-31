@@ -1,0 +1,41 @@
+# Build output — never ship host-built binaries into the image
+**/bin/
+**/obj/
+
+# Test project — not part of the API image
+tests/
+
+# Solution file — publish targets the csproj directly
+CvBuilder.slnx
+
+# IDE / editor state
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userprefs
+
+# Local-only configuration and secrets
+**/appsettings.Development.json
+**/appsettings.*.Development.json
+**/secrets.json
+**/*.pfx
+**/*.key
+**/*.pem
+.env
+.env.*
+
+# Scratch / docs that have no business in the image
+**/*.http
+*.md
+
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Git metadata (defensive — usually not in context anyway)
+.git/
+.gitignore
+.gitattributes
